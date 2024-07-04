@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url("./fonts/OpenSans-VariableFont_wdth,wght.ttf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url("./fonts/AvenirLTStd-Roman.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir LT Std';
+  src: url("./fonts/AvenirLTStd-Black.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PT Mono';;
+  src: url("./fonts/PTMono-Regular.ttf");
+  font-display: swap;
+}
+
+.error {
+  color: #ff4d4f;
+}
