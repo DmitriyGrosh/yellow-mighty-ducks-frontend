@@ -1,5 +1,5 @@
 import React, {FC, useState} from "react";
-import {Flex, Layout, Menu, MenuProps} from "antd";
+import {Flex, Layout, Menu, MenuProps, Typography} from "antd";
 import logo from "@/assets/logo.jpg";
 import {Outlet, useNavigate} from "react-router-dom";
 import {
@@ -53,6 +53,9 @@ export const Sidebar: FC = () => {
 				</Flex>
 			</Layout.Sider>
 			<Layout style={{ marginLeft: 80 }}>
+				<Layout.Header style={{ background: "transparent", padding: "0 16px" }}>
+					<Typography.Text>Balance: 1000</Typography.Text>
+				</Layout.Header>
 				<Layout.Content style={{ overflow: 'initial', padding: 8 }}>
 					<Outlet />
 				</Layout.Content>
