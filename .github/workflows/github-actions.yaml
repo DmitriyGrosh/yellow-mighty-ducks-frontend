@@ -1,0 +1,67 @@
+name: GitHub Actions Blooper frontend
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Starting Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)
+          mkdir -p ~/.ssh
+          echo -e "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_rsa
+
+      - name: main
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run:
+          ssh-keyscan -t rsa ${{ secrets.SSH_IP_ADDRESS }} >> ~/.ssh/known_hosts
+
+      - run: |
+          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+          chmod 644 ~/.ssh/known_hosts
+      - name: install modules
+        run: pnpm install
+      - name: build project
+        run: pnpm build
+
+      - name: test project
+        run: pnpm test
+
+      - name: deploy to main
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: scp -r dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}:/var/www/yellow-mighty-ducks
