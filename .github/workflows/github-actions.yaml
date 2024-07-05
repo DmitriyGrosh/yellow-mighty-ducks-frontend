@@ -55,7 +55,7 @@ jobs:
           echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
           chmod 644 ~/.ssh/known_hosts
       - name: install modules
-        run: pnpm install
+        run: npx pnpm i -g pnpm@latest
       - name: build project
         run: pnpm build
 
