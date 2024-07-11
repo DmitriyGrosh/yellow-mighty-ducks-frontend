@@ -15,11 +15,6 @@ export default defineConfig({
     ]
   },
   server: {
-    port: 443,
-    host: "0.0.0.0",
-    hmr: {
-      host: 'yellow-mighty-ducks.local',
-      port: 443,
-    },
+    port: 5000
   },
 })
