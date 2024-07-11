@@ -1,3 +1,15 @@
+.flex {
+	display: flex;
+}
+
+.flex-column {
+	flex-direction: column;
+}
+
+.wrap {
+	flex-wrap: wrap;
+}
+
 .gap-xxl {
 	gap: 80px;
 }
@@ -52,10 +64,6 @@
 
 .flex-0 {
 	flex: 0;
-}
-
-.flex {
-	display: flex;
 }
 
 .flex-ctr-ctr {

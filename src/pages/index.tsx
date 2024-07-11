@@ -1,13 +1,13 @@
 import {createBrowserRouter} from "react-router-dom";
-import {Sidebar} from "@/widgets/sidebar";
 import {Home} from "@/pages/home";
 import {Shop} from "@/pages/shop";
 import {Settings} from "@/pages/settings";
+import {BottomNavigation} from "@/widgets/bottom-navigation";
 
 export const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Sidebar />,
+		element: <BottomNavigation />,
 		children: [
 			{
 				path: "",

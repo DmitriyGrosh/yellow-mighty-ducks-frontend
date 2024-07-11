@@ -1,33 +1,51 @@
-import {Avatar, Card} from "antd";
-import { EllipsisOutlined, SettingOutlined} from "@ant-design/icons";
 import {FC} from "react";
+import {Avatar, Card} from "@telegram-apps/telegram-ui";
+import {CardChip} from "@telegram-apps/telegram-ui/dist/components/Blocks/Card/components/CardChip/CardChip";
+import {CardCell} from "@telegram-apps/telegram-ui/dist/components/Blocks/Card/components/CardCell/CardCell";
 
 type Props = {
 	avatar: string;
 	title: string;
 	description: string;
+	organization: string;
 }
 
-export const Event: FC<Props> = ({ avatar, title, description }) => {
+export const Event: FC<Props> = ({ avatar, title, description, organization }) => {
 	return (
 		<Card
-			style={{ width: 250 }}
-			cover={
+			// actions={[
+			// 	<SettingOutlined key="setting" />,
+			// 	<EllipsisOutlined key="ellipsis" />,
+			// ]}
+		>
+			<>
+
+				<CardChip>
+					<div className="flex flex-ctr-ctr gap-xxs">
+						<Avatar
+							size={28}
+							src={avatar}
+						/>
+						{organization}
+					</div>
+				</CardChip>
 				<img
 					alt="example"
 					src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+					style={{
+						display: 'block',
+						height: 308,
+						objectFit: 'cover',
+						width: 254
+					}}
 				/>
-			}
-			actions={[
-				<SettingOutlined key="setting" />,
-				<EllipsisOutlined key="ellipsis" />,
-			]}
-		>
-			<Card.Meta
-				avatar={<Avatar src={avatar} />}
-				title={title}
-				description={description}
-			/>
+				<CardCell
+					readOnly
+					subtitle={description}
+				>
+					{title}
+				</CardCell>
+			</>
 		</Card>
 	);
 }
